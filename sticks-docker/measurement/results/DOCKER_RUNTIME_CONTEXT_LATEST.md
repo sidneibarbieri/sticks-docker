@@ -1,10 +1,10 @@
 # Docker Runtime Context Preparation
 
-- Generated at: `2026-04-02T16:31:36+00:00`
+- Generated at: `2026-04-02T18:59:13+00:00`
 - Host architecture: `arm64`
 - Source Docker root: `/Users/sidneibarbieri/paper measurement/sticks-docker/docker`
-- Prepared runtime root: `/var/folders/cn/xg_f36d16gj8jkyyyjbnlypr0000gn/T/paper1-release-check.Yo5IF9/docker-context`
-- Prepared curated API root: `/var/folders/cn/xg_f36d16gj8jkyyyjbnlypr0000gn/T/paper1-release-check.Yo5IF9/curated-api`
+- Prepared runtime root: `/var/folders/cn/xg_f36d16gj8jkyyyjbnlypr0000gn/T/paper1-release-check.tx1Ta4/docker-context`
+- Prepared curated API root: `/var/folders/cn/xg_f36d16gj8jkyyyjbnlypr0000gn/T/paper1-release-check.tx1Ta4/curated-api`
 - Repaired shell scripts: `29`
 - Reset state directories: `2`
 - Generated runtime config files: `2`
