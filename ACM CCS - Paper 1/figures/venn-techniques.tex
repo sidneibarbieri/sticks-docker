@@ -1,0 +1,132 @@
+% venn-techniques.tex — Partition of ATT&CK techniques across campaign and intrusion-set usage
+% Redesigned from Venn to proportional overlap partition for stricter semantics.
+% Host requirement: the parent document must load TikZ.
+\usetikzlibrary{calc,decorations.pathreplacing}%
+\providecolor{execblue}{HTML}{1F77B4}%
+\providecolor{ctired}{HTML}{D55E00}%
+\providecolor{loopgreen}{HTML}{009E73}%
+\providecolor{edgegray}{HTML}{333333}%
+\providecolor{midgray}{HTML}{666666}%
+\providecolor{dashgray}{HTML}{D9DDE2}%
+\providecolor{facegray}{HTML}{FFFFFF}%
+\providecolor{stagefill}{HTML}{F5F5F5}%
+\providecommand{\nTechniquesAnalysis}{691}%
+\providecommand{\campaignTechniqueCount}{297}%
+\providecommand{\campaignCoveragePct}{43.0}%
+\providecommand{\intrusionSetTechniqueCount}{488}%
+\providecommand{\intrusionSetCoveragePct}{70.6}%
+\providecommand{\campaignOnlyCount}{29}%
+\providecommand{\campaignOnlyPct}{4.2}%
+\providecommand{\sharedTechniqueCount}{268}%
+\providecommand{\sharedPct}{38.8}%
+\providecommand{\intrusionSetOnlyCount}{220}%
+\providecommand{\intrusionSetOnlyPct}{31.8}%
+\providecommand{\unusedTechniqueCount}{174}%
+\providecommand{\unusedPct}{25.2}%
+\begin{tikzpicture}[font=\sffamily, every node/.style={outer sep=0pt}]
+
+\def\W{8.46}
+\def\H{1.10}
+\def\N{691}
+
+\pgfmathsetmacro{\wCampaignOnly}{\campaignOnlyCount/\N*\W}
+\pgfmathsetmacro{\wShared}{\sharedTechniqueCount/\N*\W}
+\pgfmathsetmacro{\wIntrOnly}{\intrusionSetOnlyCount/\N*\W}
+\pgfmathsetmacro{\wUnused}{\unusedTechniqueCount/\N*\W}
+
+\pgfmathsetmacro{\xA}{0}
+\pgfmathsetmacro{\xB}{\wCampaignOnly}
+\pgfmathsetmacro{\xC}{\wCampaignOnly+\wShared}
+\pgfmathsetmacro{\xD}{\wCampaignOnly+\wShared+\wIntrOnly}
+\pgfmathsetmacro{\xE}{\W}
+
+% Main partition bar
+\fill[ctired!78!white] (\xA,0) rectangle (\xB,\H);
+\fill[ctired!42!execblue!55!white] (\xB,0) rectangle (\xC,\H);
+\fill[execblue!80!white] (\xC,0) rectangle (\xD,\H);
+\fill[dashgray!48] (\xD,0) rectangle (\xE,\H);
+\draw[edgegray!92!black, line width=0.64pt] (\xA,0) rectangle (\xE,\H);
+\foreach \x in {\xB,\xC,\xD}{
+  \draw[white, line width=0.42pt] (\x,0) -- (\x,\H);
+}
+
+% Top total label
+\node[
+  font=\sffamily\bfseries\fontsize{7.9}{8.3}\selectfont,
+  text=edgegray!96!black,
+  anchor=south,
+  inner sep=0pt
+] at ({\W/2},\H+1.14) {Total techniques: \nTechniquesAnalysis};
+
+% Campaign span
+\draw[ctired!72!black, line width=0.70pt]
+  (\xA,\H+0.62) -- (\xC,\H+0.62);
+\draw[ctired!72!black, line width=0.50pt] (\xA,\H+0.53) -- (\xA,\H+0.71);
+\draw[ctired!72!black, line width=0.50pt] (\xC,\H+0.53) -- (\xC,\H+0.71);
+\node[
+  font=\sffamily\fontsize{7.10}{7.45}\selectfont\bfseries,
+  text=ctired!86!black,
+  anchor=south,
+  align=center,
+  inner sep=0pt
+] at ({(\xA+\xC)/2},\H+0.78)
+  {\campaignTechniqueCount\ campaign techniques (\campaignCoveragePct\%)};
+
+% Intrusion-set span
+\draw[execblue!72!black, line width=0.70pt]
+  (\xB,\H+0.18) -- (\xD,\H+0.18);
+\draw[execblue!72!black, line width=0.50pt] (\xB,\H+0.10) -- (\xB,\H+0.26);
+\draw[execblue!72!black, line width=0.50pt] (\xD,\H+0.10) -- (\xD,\H+0.26);
+\node[
+  font=\sffamily\fontsize{7.10}{7.45}\selectfont\bfseries,
+  text=execblue!86!black,
+  anchor=south,
+  align=center,
+  inner sep=0pt,
+  text width=4.90cm
+] at ({(\xB+\xD)/2},\H+0.24)
+  {\intrusionSetTechniqueCount\ intrusion-set techniques (\intrusionSetCoveragePct\%)};
+
+% Counts inside segments
+\node[font=\sffamily\bfseries\fontsize{8.6}{8.9}\selectfont, text=edgegray!98!black]
+  at ({(\xA+\xB)/2},0.49*\H) {\campaignOnlyCount};
+\node[font=\sffamily\bfseries\fontsize{9.8}{10.2}\selectfont, text=edgegray!98!black]
+  at ({(\xB+\xC)/2},0.49*\H) {\sharedTechniqueCount};
+\node[font=\sffamily\bfseries\fontsize{9.8}{10.2}\selectfont, text=edgegray!98!black]
+  at ({(\xC+\xD)/2},0.49*\H) {\intrusionSetOnlyCount};
+\node[font=\sffamily\bfseries\fontsize{8.6}{8.9}\selectfont, text=edgegray!98!black]
+  at ({(\xD+\xE)/2},0.49*\H) {\unusedTechniqueCount};
+
+% Segment labels
+\node[
+  font=\sffamily\fontsize{7.15}{7.55}\selectfont,
+  text=edgegray!92!black,
+  align=left,
+  text width=1.30cm,
+  anchor=north west,
+  inner sep=0pt
+] at (\xA,-0.16) {Campaign only\\(\campaignOnlyPct\%)};
+\node[
+  font=\sffamily\fontsize{7.15}{7.55}\selectfont,
+  text=edgegray!92!black,
+  align=center,
+  text width=0.96cm,
+  anchor=north
+] at ({(\xB+\xC)/2},-0.16) {Shared\\(\sharedPct\%)};
+\node[
+  font=\sffamily\fontsize{7.15}{7.55}\selectfont,
+  text=edgegray!92!black,
+  align=center,
+  text width=1.78cm,
+  anchor=north
+] at ({(\xC+\xD)/2},-0.16) {Intrusion-set only\\(\intrusionSetOnlyPct\%)};
+\node[
+  font=\sffamily\fontsize{7.15}{7.55}\selectfont,
+  text=edgegray!92!black,
+  align=right,
+  text width=1.05cm,
+  anchor=north east,
+  inner sep=0pt
+] at (\xE,-0.16) {Unused\\(\unusedPct\%)};
+
+\end{tikzpicture}%

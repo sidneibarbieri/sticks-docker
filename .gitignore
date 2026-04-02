@@ -1,0 +1,15 @@
+.DS_Store
+__pycache__/
+*.pyc
+sticks-docker/measurement/runtime/docker-context/
+sticks-docker/measurement/runtime/curated-api/
+ACM CCS - Paper 1/build_artifacts/
+ACM CCS - Paper 1/*.aux
+ACM CCS - Paper 1/*.bbl
+ACM CCS - Paper 1/*.blg
+ACM CCS - Paper 1/*.fdb_latexmk
+ACM CCS - Paper 1/*.fls
+ACM CCS - Paper 1/*.log
+ACM CCS - Paper 1/*.out
+ACM CCS - Paper 1/*.run.xml
+ACM CCS - Paper 1/*.synctex.gz

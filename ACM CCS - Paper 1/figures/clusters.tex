@@ -1,0 +1,112 @@
+% clusters.tex — Campaign cluster distribution (k=7, n=51)
+% Proportional strip: compact single horizontal bar with proportional segments.
+% Design: Okabe-Ito palette, standardized typography.
+% Host requirement: the parent document must load TikZ.
+\usetikzlibrary{decorations.pathreplacing}%
+\providecolor{execblue}{HTML}{1F77B4}%
+\providecolor{ctired}{HTML}{D55E00}%
+\providecolor{loopgreen}{HTML}{009E73}%
+\providecolor{midgray} {HTML}{666666}%
+\providecolor{dashgray}{HTML}{D9DDE2}%
+\providecolor{edgegray}{HTML}{333333}%
+\providecolor{facegray}{HTML}{FFFFFF}%
+\providecolor{stagefill}{HTML}{F5F5F5}%
+\providecommand{\silhouetteScore}{0.05}%
+\providecommand{\silhouetteBaselineMean}{-0.01}%
+\providecommand{\silhouetteBaselineStd}{0.01}%
+\begin{tikzpicture}[font=\sffamily]
+
+\def\W{8.46}       % total strip width (cm) — exact ACM columnwidth
+\def\H{1.10}       % strip height (cm) — matched to Figure 5 for visual consistency
+\def\N{51}          % total campaigns
+
+% Cluster sizes (sorted descending)
+% C1=43, C2=2, C3=2, C4=1, C5=1, C6=1, C7=1
+
+% Proportional widths
+\pgfmathsetmacro{\wA}{43/\N*\W}    % dominant
+\pgfmathsetmacro{\wB}{2/\N*\W}     % size-2 cluster
+\pgfmathsetmacro{\wC}{1/\N*\W}     % singleton
+
+% --- Segments (left to right: dominant, 2×size-2, 4×singletons) ---
+\def\cx{0}
+
+% C1 — dominant (43) — paper's primary data color
+\fill[execblue!96!black, rounded corners=0.3pt]
+  (\cx,0) rectangle (\wA,\H);
+\node[white, font=\sffamily\bfseries\fontsize{7.8}{8.2}\selectfont, align=center]
+  at (\wA/2, \H/2) {43 campaigns (84\%)};
+\pgfmathsetmacro{\cx}{\wA}
+
+% C2 — size 2 — muted grays (residual)
+\fill[midgray!72] (\cx,0) rectangle ({\cx+\wB},\H);
+\pgfmathsetmacro{\cx}{\cx+\wB}
+
+% C3 — size 2 — slightly lighter
+\fill[midgray!58] (\cx,0) rectangle ({\cx+\wB},\H);
+\pgfmathsetmacro{\cx}{\cx+\wB}
+
+% C4–C7 — singletons — progressively lighter
+\fill[dashgray!72]  (\cx,0) rectangle ({\cx+\wC},\H);
+\pgfmathsetmacro{\cx}{\cx+\wC}
+\fill[dashgray!58]  (\cx,0) rectangle ({\cx+\wC},\H);
+\pgfmathsetmacro{\cx}{\cx+\wC}
+\fill[dashgray!45]  (\cx,0) rectangle ({\cx+\wC},\H);
+\pgfmathsetmacro{\cx}{\cx+\wC}
+\fill[dashgray!34]  (\cx,0) rectangle ({\cx+\wC},\H);
+
+% --- Outline ---
+\draw[edgegray!92!black, line width=0.64pt, rounded corners=0.3pt] (0,0) rectangle (\W,\H);
+
+% --- Thin dividers between residual segments ---
+\pgfmathsetmacro{\dA}{\wA}
+\pgfmathsetmacro{\dB}{\wA+\wB}
+\pgfmathsetmacro{\dC}{\wA+2*\wB}
+\pgfmathsetmacro{\dD}{\wA+2*\wB+\wC}
+\pgfmathsetmacro{\dE}{\wA+2*\wB+2*\wC}
+\pgfmathsetmacro{\dF}{\wA+2*\wB+3*\wC}
+\foreach \x in {\dA,\dB,\dC,\dD,\dE,\dF}{
+  \draw[white, line width=0.42pt] (\x,0) -- (\x,\H);
+}
+
+% --- Residual annotation (below strip, right-aligned under residual area) ---
+\pgfmathsetmacro{\residStart}{\wA}
+\pgfmathsetmacro{\residEnd}{\W}
+\pgfmathsetmacro{\residMid}{(\residStart+\residEnd)/2}
+
+% Residual marker under strip
+\draw[edgegray!44, line width=0.42pt]
+  (\residStart, -0.06) -- (\residEnd, -0.06);
+\node[
+  font=\sffamily\fontsize{7.10}{7.40}\selectfont\bfseries,
+  text=edgegray!92!black,
+  anchor=north east,
+  align=right
+]
+  at (\W, -0.15)
+  {6 residual clusters (8 campaigns, 16\%)};
+
+% --- Footer with metrics ---
+\node[
+  font=\sffamily\fontsize{7.10}{7.40}\selectfont,
+  text=edgegray!92!black,
+  anchor=north west,
+  align=left,
+  inner xsep=0pt,
+  inner ysep=0pt
+]
+  at (0, -0.56)
+  {$k$-means ($k{=}7$, $n{=}51$)};
+
+\node[
+  font=\sffamily\fontsize{7.10}{7.40}\selectfont,
+  text=edgegray!92!black,
+  anchor=north east,
+  align=right,
+  inner xsep=0pt,
+  inner ysep=0pt
+]
+  at (\W, -0.56)
+  {Silhouette = \silhouetteScore{} \quad Baseline = \silhouetteBaselineMean{}\,$\pm$\,\silhouetteBaselineStd{}};
+
+\end{tikzpicture}%

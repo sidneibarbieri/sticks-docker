@@ -1,0 +1,61 @@
+% Measurement values for Paper 1 (STICKS Docker boundary)
+% Bundle: sticks/data/stix/enterprise-attack.json
+% Computed by: python3 sticks-docker/measurement/scripts/analyze_campaigns.py --bundle sticks/data/stix/enterprise-attack.json --output-latex
+%
+% Platform-agnostic techniques are active top-level ATT&CK techniques without
+% a concrete host platform among Windows, Linux, macOS, Containers, ESXi,
+% or Network Devices.
+
+% --- Dataset counts ---
+\newcommand{\nCampaignsTotal}{52}
+\newcommand{\nCampaigns}{51}
+\newcommand{\nIntrusionSets}{172}
+\newcommand{\nRelationships}{17270}
+\newcommand{\nAttackPatternObjects}{691}
+\newcommand{\nTechniquesAnalysis}{691}
+\newcommand{\nComposedObjects}{24772}
+
+% --- Campaign technique coverage ---
+\newcommand{\campaignCoveragePct}{43.0}
+\newcommand{\campaignCoverageUnusedPct}{57.0}
+\newcommand{\campaignTechniqueCount}{297}
+\newcommand{\intrusionSetCoveragePct}{70.6}
+\newcommand{\intrusionSetTechniqueCount}{488}
+\newcommand{\sharedTechniqueCount}{268}
+\newcommand{\campaignOnlyCount}{29}
+\newcommand{\intrusionSetOnlyCount}{220}
+\newcommand{\unusedTechniqueCount}{174}
+
+% --- Venn diagram percentages ---
+\newcommand{\campaignOnlyPct}{4.2}
+\newcommand{\sharedPct}{38.8}
+\newcommand{\intrusionSetOnlyPct}{31.8}
+\newcommand{\unusedPct}{25.2}
+
+% --- Technique frequency ---
+\newcommand{\topTechniqueId}{T1105}
+\newcommand{\topTechniqueLabel}{Ingress Tool Transfer}
+\newcommand{\topTechniqueInCampaigns}{28}
+\newcommand{\topTechniquePct}{55}
+
+% --- Intrusion sets ---
+\newcommand{\nIntrusionSetsWithTechniques}{168}
+\newcommand{\intrusionSetWithTechniquesPct}{97.7}
+\newcommand{\nIntrusionSetsEmpty}{4}
+\newcommand{\intrusionSetEmptyPct}{2.3}
+\newcommand{\intrusionSetTechRefs}{4362}
+\newcommand{\intrusionSetTechAvg}{26.0}
+
+% --- Emulation ---
+\newcommand{\nPlatformAgnosticTechniques}{32}
+\newcommand{\nTranslatableTechniques}{659}
+\newcommand{\nCaseStudyCampaigns}{2}
+\newcommand{\caseStudyRunsEach}{10}
+
+% --- Clustering and LCS ---
+\newcommand{\silhouetteScore}{0.05}
+\newcommand{\silhouetteBaselineMean}{-0.01}
+\newcommand{\silhouetteBaselineStd}{0.01}
+\newcommand{\lcsLengthMean}{2.8}
+\newcommand{\lcsLengthMedian}{2.0}
+\newcommand{\lcsLengthMax}{29}
