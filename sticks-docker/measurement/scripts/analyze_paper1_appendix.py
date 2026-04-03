@@ -14,10 +14,22 @@ DOCKER_EXECUTION = MEASUREMENT_ROOT / "results" / "docker_caldera_execution_late
 DOCKER_FINDINGS = MEASUREMENT_ROOT / "results" / "docker_execution_findings_latest.json"
 PROVENANCE_MD = MEASUREMENT_ROOT / "results" / "PAPER1_APPENDIX_PROVENANCE.md"
 PROVENANCE_JSON = MEASUREMENT_ROOT / "results" / "paper1_appendix_provenance.json"
-TEX_VALUES = WORKSPACE_ROOT / "ACM CCS - Paper 1" / "appendix_values.tex"
+
+
+def resolve_appendix_values_path() -> Path:
+    for pattern in ("*Paper 1*", "*paper1*", "paper1-manuscript"):
+        matches = sorted(path for path in WORKSPACE_ROOT.glob(pattern) if path.is_dir())
+        if matches:
+            return matches[0] / "appendix_values.tex"
+    return WORKSPACE_ROOT / "paper1-manuscript" / "appendix_values.tex"
+
+
+TEX_VALUES = resolve_appendix_values_path()
 
 
 def display_path(path: Path) -> str:
+    if path == TEX_VALUES:
+        return "manuscript/paper1/appendix_values.tex"
     for root in (WORKSPACE_ROOT, MEASUREMENT_ROOT):
         try:
             return path.relative_to(root).as_posix()
@@ -188,6 +200,8 @@ def write_tex(field_stats: dict, itemsets: list[dict], docker_rows: list[dict], 
         f"{latex_escape(row['adversary'])} & {row['successful_links']} & {'Yes' if row['end_marker'] else 'No'} & {row['residual_nonzero']} \\\\"
         for row in docker_rows
     )
+    if not TEX_VALUES.parent.exists():
+        return
     TEX_VALUES.write_text(
         "\n".join(
             [

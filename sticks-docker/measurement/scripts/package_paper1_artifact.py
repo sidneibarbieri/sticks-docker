@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Create a paper-scoped review artifact for ACM CCS Paper 1.
+Create a venue-neutral reproducibility artifact for the procedural study.
 
 The staged artifact preserves the frozen Docker-backed execution boundary while
 excluding workspace residue, historical result archives, and reviewer-irrelevant
@@ -18,9 +18,9 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 MEASUREMENT_ROOT = SCRIPT_DIR.parent
 STICKS_DOCKER_ROOT = MEASUREMENT_ROOT.parent
 REPO_ROOT = STICKS_DOCKER_ROOT.parent
-PAPER1_ROOT = REPO_ROOT / "ACM CCS - Paper 1"
 DEFAULT_DEST = REPO_ROOT / "artifacts" / "paper1-review-artifact"
 PUBLISHED_REPOSITORY = "https://github.com/sidneibarbieri/sticks-docker"
+PAPER_TITLE = "The Procedural Semantics Gap in ATT&CK-in-STIX: A Measurement-Driven Analysis for APT Emulation"
 
 
 def ensure_parent(path: Path) -> None:
@@ -73,33 +73,12 @@ def empty_directory(path: Path) -> None:
     path.mkdir(parents=True, exist_ok=True)
 
 
-def stage_paper(dest_root: Path) -> None:
-    paper_dest = dest_root / "ACM CCS - Paper 1"
-    keep_files = [
-        "main.tex",
-        "main.pdf",
-        "references.bib",
-        "acmart.cls",
-        "ACM-Reference-Format.bst",
-        "results/values.tex",
-        "appendix_values.tex",
-    ]
-    for relative in keep_files:
-        copy_file(PAPER1_ROOT / relative, paper_dest / relative)
-
-    copy_tree(PAPER1_ROOT / "figures", paper_dest / "figures")
-
-
 def stage_shared_bundle(dest_root: Path) -> None:
     copy_file(
         REPO_ROOT / "sticks" / "data" / "stix" / "enterprise-attack.json",
         dest_root / "sticks" / "data" / "stix" / "enterprise-attack.json",
     )
-    for relative in ["build_manuscript.py", "check_paper_hygiene.py"]:
-        copy_file(
-            REPO_ROOT / "sticks" / "scripts" / relative,
-            dest_root / "sticks" / "scripts" / relative,
-        )
+    copy_file(REPO_ROOT / "sticks" / "LICENSE", dest_root / "LICENSE")
 
 
 def stage_measurement_boundary(dest_root: Path) -> None:
@@ -278,16 +257,6 @@ def write_artifact_docs(dest_root: Path) -> None:
                 "*.pyc",
                 "sticks-docker/measurement/runtime/docker-context/",
                 "sticks-docker/measurement/runtime/curated-api/",
-                "ACM CCS - Paper 1/build_artifacts/",
-                "ACM CCS - Paper 1/*.aux",
-                "ACM CCS - Paper 1/*.bbl",
-                "ACM CCS - Paper 1/*.blg",
-                "ACM CCS - Paper 1/*.fdb_latexmk",
-                "ACM CCS - Paper 1/*.fls",
-                "ACM CCS - Paper 1/*.log",
-                "ACM CCS - Paper 1/*.out",
-                "ACM CCS - Paper 1/*.run.xml",
-                "ACM CCS - Paper 1/*.synctex.gz",
                 "",
             ]
         ),
@@ -297,11 +266,12 @@ def write_artifact_docs(dest_root: Path) -> None:
         dest_root / "README.md",
         "\n".join(
             [
-                "# Paper 1 Review Artifact",
+                "# Procedural Reproducibility Artifact",
                 "",
-                "This staging directory contains the paper-scoped reproducibility surface",
-                "for the Paper 1 measurement manuscript on the procedural semantics gap",
-                "in structured CTI.",
+                "This staging directory contains the reproducibility surface for the",
+                "procedural-semantics study in structured CTI.",
+                "",
+                f"Paper title: {PAPER_TITLE}.",
                 "",
                 "Suggested public repository name: `sticks-docker`.",
                 "",
@@ -321,9 +291,8 @@ def write_artifact_docs(dest_root: Path) -> None:
                 "bash run_review_check.sh",
                 "```",
                 "",
-                "This reruns the structural measurement scripts, regenerates the",
-                "manuscript macro files, rebuilds the Paper 1 PDF, refreshes the",
-                "frozen Docker audit summaries, and executes the measurement unit tests.",
+                "This reruns the structural measurement scripts, refreshes the frozen",
+                "Docker audit summaries, and executes the measurement unit tests.",
                 "",
                 "Optional full Docker replay:",
                 "",
@@ -335,6 +304,14 @@ def write_artifact_docs(dest_root: Path) -> None:
                 "up the shared-substrate lab, reruns the eight curated adversaries, and",
                 "regenerates the execution summaries consumed by the paper.",
                 "",
+                "## What the reviewer can verify directly",
+                "",
+                "- Retrieval: the repository is public, self-contained, and includes a `LICENSE`.",
+                "- Exercisability: `bash run_review_check.sh` recomputes the released measurement",
+                "  outputs and validates the frozen execution summaries.",
+                "- Main-result reproduction: the optional Docker path rebuilds the shared lab and",
+                "  reruns the eight curated adversaries end to end from the published artifact.",
+                "",
                 "## Runtime expectations",
                 "",
                 "- Python 3.11+",
@@ -343,12 +320,14 @@ def write_artifact_docs(dest_root: Path) -> None:
                 "- Fast validation runtime: about 3 to 4 minutes on a laptop-class machine",
                 "- Full Docker replay runtime: substantially longer and dependent on Docker build cache",
                 "- No GitHub, Azure, or other external API keys are required for the reviewer paths",
+                "- For Docker Desktop on macOS, run the full Docker replay from a regular local clone",
+                "  path (for example under your home directory) rather than a transient temp directory,",
+                "  so the Caldera bind mount remains visible to the containers.",
                 "",
                 "## Repository layout",
                 "",
                 "- `run_review_check.sh`: root-level reviewer wrapper.",
-                "- `ACM CCS - Paper 1/`: manuscript source plus the current built PDF.",
-                "- `sticks/`: shared ATT&CK bundle plus manuscript build helpers required by the verifier.",
+                "- `sticks/`: shared ATT&CK bundle required by the verifier.",
                 "- `sticks-docker/measurement/`: Paper 1 measurement scripts, tests, verifier, and latest audit outputs.",
                 "- `sticks-docker/sticks/`: frozen Stage 2/3 support code and curated adversary payloads.",
                 "- `sticks-docker/docker/`: frozen shared-substrate Docker context with runtime residue removed.",
@@ -356,8 +335,8 @@ def write_artifact_docs(dest_root: Path) -> None:
                 "## Reproduction contract",
                 "",
                 "If `bash run_review_check.sh` passes from the repository root, the staged",
-                "artifact has enough material to rerun the Paper 1 measurements, rebuild",
-                "the manuscript, and refresh the frozen Docker audit summaries tied to the paper.",
+                "artifact has enough material to rerun the procedural measurements and",
+                "refresh the frozen Docker audit summaries.",
                 "",
                 "The optional Docker replay remains explicitly labeled as a shared-substrate",
                 "execution audit, not isolated per-campaign historical replay.",
@@ -379,9 +358,7 @@ def write_artifact_docs(dest_root: Path) -> None:
                 "## Included components",
                 "",
                 "- `run_review_check.sh`: root-level fast reviewer entry point.",
-                "- `ACM CCS - Paper 1/`: manuscript source, bibliography, class/bst files, figures, and macro files.",
                 "- `sticks/data/stix/enterprise-attack.json`: the Enterprise ATT&CK bundle used by the Paper 1 measurement scripts.",
-                "- `sticks/scripts/`: manuscript build and hygiene helpers required by the verifier.",
                 "- `sticks-docker/measurement/`: Paper 1 measurement scripts, tests, latest audit outputs, runtime docs, and the canonical verifier.",
                 "- `sticks-docker/sticks/`: frozen support code plus curated Caldera API payloads.",
                 "- `sticks-docker/docker/`: frozen shared-substrate Docker context with runtime residue removed.",
@@ -395,8 +372,12 @@ def write_artifact_docs(dest_root: Path) -> None:
                 "",
                 "## Reproduction modes",
                 "",
-                "- Fast mode (`run_review_check.sh`): recomputes the measurement outputs and manuscript from the staged artifact plus the frozen latest Docker audit summaries.",
+                "- Fast mode (`run_review_check.sh`): recomputes the measurement outputs from the staged artifact plus the frozen latest Docker audit summaries.",
                 "- Full Docker mode (`sticks-docker/measurement/run_full_docker_audit.sh`): rebuilds the shared-substrate lab and reruns the eight curated adversaries end to end.",
+                "",
+                "The intended publication surface for this repository is the tagged public revision",
+                "of the artifact itself. If a DOI-backed archival snapshot is later created, it should",
+                "point to the same tagged contents.",
                 "",
             ]
         ),
@@ -418,13 +399,12 @@ def main() -> None:
         shutil.rmtree(dest_root)
     dest_root.mkdir(parents=True, exist_ok=True)
 
-    stage_paper(dest_root)
     stage_shared_bundle(dest_root)
     stage_measurement_boundary(dest_root)
     stage_frozen_artifact(dest_root)
     write_artifact_docs(dest_root)
 
-    print(f"Staged Paper 1 artifact at {dest_root}")
+    print(f"Staged procedural artifact at {dest_root}")
 
 
 if __name__ == "__main__":

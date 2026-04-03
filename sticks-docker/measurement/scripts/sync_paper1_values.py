@@ -16,8 +16,19 @@ from pathlib import Path
 
 MEASUREMENT_ROOT = Path(__file__).resolve().parent.parent
 WORKSPACE_ROOT = MEASUREMENT_ROOT.parent.parent
-PAPER1_MAIN = WORKSPACE_ROOT / "ACM CCS - Paper 1" / "main.tex"
-PAPER1_VALUES = WORKSPACE_ROOT / "ACM CCS - Paper 1" / "results" / "values.tex"
+
+
+def resolve_paper1_root() -> Path:
+    for pattern in ("*Paper 1*", "*paper1*", "paper1-manuscript"):
+        matches = sorted(path for path in WORKSPACE_ROOT.glob(pattern) if path.is_dir())
+        if matches:
+            return matches[0]
+    return WORKSPACE_ROOT / "paper1-manuscript"
+
+
+PAPER1_ROOT = resolve_paper1_root()
+PAPER1_MAIN = PAPER1_ROOT / "main.tex"
+PAPER1_VALUES = PAPER1_ROOT / "results" / "values.tex"
 ANALYSIS_CMD = [
     "python3",
     str(MEASUREMENT_ROOT / "scripts" / "analyze_campaigns.py"),
@@ -30,6 +41,8 @@ OUTPUT_MD = MEASUREMENT_ROOT / "results" / "PAPER1_MANUSCRIPT_VALUES_SYNC.md"
 
 
 def display_path(path: Path) -> str:
+    if path == PAPER1_VALUES:
+        return "manuscript/paper1/results/values.tex"
     for root in (WORKSPACE_ROOT, MEASUREMENT_ROOT):
         try:
             return path.relative_to(root).as_posix()

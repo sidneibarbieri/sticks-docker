@@ -1,7 +1,7 @@
 # Paper 1 Robustness Provenance
 
 - Bundle: `sticks/data/stix/enterprise-attack.json`
-- Generated at (UTC): `2026-04-03T00:31:57Z`
+- Generated at (UTC): `2026-04-03T16:41:53Z`
 
 ## Alternative Binary-Distance Clustering
 
@@ -10,9 +10,9 @@
 
 ## Randomized Tactic-Assignment LCS Sensitivity
 
-- Mean LCS across 200 trials: average `2.739`, range `2.726`--`2.765`.
+- Mean LCS across 200 trials: average `2.74`, range `2.729`--`2.757`.
 - Median LCS across 200 trials: average `2.0`, range `2.0`--`2.0`.
-- Max LCS across 200 trials: average `25.985`, range `24`--`28`.
+- Max LCS across 200 trials: average `25.89`, range `24`--`28`.
 
 ## Campaign ↔ Intrusion-Set Overlap
 

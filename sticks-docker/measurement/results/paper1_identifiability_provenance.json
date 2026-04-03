@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-03T00:31:57.036950+00:00",
+  "generated_at": "2026-04-03T16:41:52.575759+00:00",
   "bundle_path": "sticks/data/stix/enterprise-attack.json",
   "methodology": {
     "task": "Positive-evidence identifiability over ATT&CK technique profiles.",

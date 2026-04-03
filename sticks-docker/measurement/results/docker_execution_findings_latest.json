@@ -30,44 +30,62 @@
     "shared_substrate_model": true
   },
   "execution": {
-    "effective_quiescent_seconds": 120,
-    "explicit_end_markers": 8,
+    "effective_quiescent_seconds": 15,
+    "explicit_end_markers": 3,
     "operations_total": 8,
     "operations_with_failed_links": 0,
-    "operations_with_pending_links": 0,
+    "operations_with_pending_links": 6,
     "operations_with_progress": 8,
     "operations_with_zero_steps_and_nonzero_chain": 8,
     "operations_without_failed_links": 8,
     "per_operation": [
       {
         "adversary_name": "APT41 DUST",
-        "blocking_command": "echo \"END OF APT 41 DUST\"",
-        "blocking_status": 0,
-        "blocking_technique_id": "T1529",
-        "blocking_technique_name": "END OF APT 41 DUST",
-        "chain_count": 24,
+        "blocking_command": "curl http://172.21.0.20/crm.php -s --fail --retry 3",
+        "blocking_status": -3,
+        "blocking_technique_id": "T1119",
+        "blocking_technique_name": "T1119 - Automated Collection",
+        "chain_count": 10,
         "failed_links": 0,
         "name": "OP001",
-        "nonzero_links": [],
-        "pending_links": 0,
+        "nonzero_links": [
+          {
+            "command": "curl http://172.21.0.20/crm.php -s --fail --retry 3",
+            "index": 10,
+            "name": "T1119 - Automated Collection",
+            "output": "False",
+            "status": -3,
+            "technique_id": "T1119"
+          }
+        ],
+        "pending_links": 1,
         "state": "running",
         "step_count": 0,
-        "successful_links": 24
+        "successful_links": 9
       },
       {
         "adversary_name": "C0010",
         "blocking_command": "echo \"END OF C0010\"",
-        "blocking_status": 0,
+        "blocking_status": -3,
         "blocking_technique_id": "T1529",
         "blocking_technique_name": "END OF C0010",
         "chain_count": 10,
         "failed_links": 0,
         "name": "OP002",
-        "nonzero_links": [],
-        "pending_links": 0,
+        "nonzero_links": [
+          {
+            "command": "echo \"END OF C0010\"",
+            "index": 10,
+            "name": "END OF C0010",
+            "output": "False",
+            "status": -3,
+            "technique_id": "T1529"
+          }
+        ],
+        "pending_links": 1,
         "state": "running",
         "step_count": 0,
-        "successful_links": 10
+        "successful_links": 9
       },
       {
         "adversary_name": "C0026",
@@ -86,33 +104,51 @@
       },
       {
         "adversary_name": "CostaRicto",
-        "blocking_command": "echo \"END OF COSTARICTO\"",
-        "blocking_status": 0,
-        "blocking_technique_id": "T1529",
-        "blocking_technique_name": "END OF COSTARICTO",
-        "chain_count": 11,
+        "blocking_command": "fuser -k 2222/tcp 2>/dev/null; sshpass -p 'RootPass123' ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -L 2222:172.22.0.20:22 root@172.21.0.20 -N & TUNNEL_PID=$!; sleep 5; sshpass -p 'RootPass123' ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@localhost -p 2222 id; kill $TUNNEL_PID",
+        "blocking_status": -3,
+        "blocking_technique_id": "T1572",
+        "blocking_technique_name": "T1572 - Protocol Tunneling",
+        "chain_count": 10,
         "failed_links": 0,
         "name": "OP004",
-        "nonzero_links": [],
-        "pending_links": 0,
+        "nonzero_links": [
+          {
+            "command": "fuser -k 2222/tcp 2>/dev/null; sshpass -p 'RootPass123' ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -L 2222:172.22.0.20:22 root@172.21.0.20 -N & TUNNEL_PID=$!; sleep 5; sshpass -p 'RootPass123' ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@localhost -p 2222 id; kill $TUNNEL_PID",
+            "index": 10,
+            "name": "T1572 - Protocol Tunneling",
+            "output": "False",
+            "status": -3,
+            "technique_id": "T1572"
+          }
+        ],
+        "pending_links": 1,
         "state": "running",
         "step_count": 0,
-        "successful_links": 11
+        "successful_links": 9
       },
       {
         "adversary_name": "Operation MidnightEclipse",
-        "blocking_command": "echo \"END OF OPERATION MIDNIGHT ECLIPSE\"",
-        "blocking_status": 0,
-        "blocking_technique_id": "T1529",
-        "blocking_technique_name": "END OF OPERATION MIDNIGHT ECLIPSE",
-        "chain_count": 18,
+        "blocking_command": "sshpass -p RootPass123 ssh -o StrictHostKeyChecking=no root@172.21.0.20 'id && cat /etc/passwd' && sshpass -p RootPass123 ssh -o StrictHostKeyChecking=no root@172.21.0.20 'sshpass -p RootPass123 ssh -o StrictHostKeyChecking=no root@172.22.0.20 id'",
+        "blocking_status": -3,
+        "blocking_technique_id": "T1584.003",
+        "blocking_technique_name": "T1584.003 - Virtual Private Server",
+        "chain_count": 10,
         "failed_links": 0,
         "name": "OP005",
-        "nonzero_links": [],
-        "pending_links": 0,
+        "nonzero_links": [
+          {
+            "command": "sshpass -p RootPass123 ssh -o StrictHostKeyChecking=no root@172.21.0.20 'id && cat /etc/passwd' && sshpass -p RootPass123 ssh -o StrictHostKeyChecking=no root@172.21.0.20 'sshpass -p RootPass123 ssh -o StrictHostKeyChecking=no root@172.22.0.20 id'",
+            "index": 10,
+            "name": "T1584.003 - Virtual Private Server",
+            "output": "False",
+            "status": -3,
+            "technique_id": "T1584.003"
+          }
+        ],
+        "pending_links": 1,
         "state": "running",
         "step_count": 0,
-        "successful_links": 18
+        "successful_links": 9
       },
       {
         "adversary_name": "Outer Space",
@@ -131,47 +167,65 @@
       },
       {
         "adversary_name": "Salesforce Data Exfiltration",
-        "blocking_command": "echo \"END OF SALESFORCE DATA EXFILTRATION\"",
-        "blocking_status": 0,
-        "blocking_technique_id": "T1529",
-        "blocking_technique_name": "END OF SALESFORCE DATA EXFILTRATION",
-        "chain_count": 19,
+        "blocking_command": "sshpass -p 'RootPass123' ssh root@172.21.0.20 'ls -la / && find / -maxdepth 2 -type d'",
+        "blocking_status": -3,
+        "blocking_technique_id": "T1083",
+        "blocking_technique_name": "T1083 - File and Directory Discovery",
+        "chain_count": 10,
         "failed_links": 0,
         "name": "OP007",
-        "nonzero_links": [],
-        "pending_links": 0,
+        "nonzero_links": [
+          {
+            "command": "sshpass -p 'RootPass123' ssh root@172.21.0.20 'ls -la / && find / -maxdepth 2 -type d'",
+            "index": 10,
+            "name": "T1083 - File and Directory Discovery",
+            "output": "False",
+            "status": -3,
+            "technique_id": "T1083"
+          }
+        ],
+        "pending_links": 1,
         "state": "running",
         "step_count": 0,
-        "successful_links": 19
+        "successful_links": 9
       },
       {
         "adversary_name": "ShadowRay",
-        "blocking_command": "echo \"END OF SHADOWRAY\"",
-        "blocking_status": 0,
-        "blocking_technique_id": "T1529",
-        "blocking_technique_name": "END OF SHADOWRAY",
-        "chain_count": 11,
+        "blocking_command": "echo 'mining crypto'",
+        "blocking_status": -3,
+        "blocking_technique_id": "T1496.001",
+        "blocking_technique_name": "T1496.001 - Compute Hijacking",
+        "chain_count": 10,
         "failed_links": 0,
         "name": "OP008",
-        "nonzero_links": [],
-        "pending_links": 0,
+        "nonzero_links": [
+          {
+            "command": "echo 'mining crypto'",
+            "index": 10,
+            "name": "T1496.001 - Compute Hijacking",
+            "output": "False",
+            "status": -3,
+            "technique_id": "T1496.001"
+          }
+        ],
+        "pending_links": 1,
         "state": "running",
         "step_count": 0,
-        "successful_links": 11
+        "successful_links": 9
       }
     ],
     "poll_timeout_reached": false,
     "quiescent_plateau_reached": true,
     "total_failed_links": 0,
-    "total_pending_links": 0,
-    "total_successful_links": 109
+    "total_pending_links": 6,
+    "total_successful_links": 70
   },
-  "generated_at_utc": "2026-04-03T00:32:12+00:00",
+  "generated_at_utc": "2026-04-03T16:42:55+00:00",
   "paper_takeaways": [
     "The Docker artifact executes all curated campaigns inside one shared pre-composed substrate, not one isolated SUT per campaign.",
     "For this legacy Caldera path, executed work is visible in operation.chain even when operation.steps remains empty.",
     "Reproducibility depends on runtime repair outside the frozen artifact: missing executable bits, missing Caldera conf files, and host-aware bootstrap adjustments are required for clean replay on a fresh ARM64 host.",
-    "All curated campaigns progressed. 0 record at least one non-zero link status, 0 still have a pending tail under the observed window, and 8 reach explicit end markers.",
+    "All curated campaigns progressed. 0 record at least one non-zero link status, 6 still have a pending tail under the observed window, and 3 reach explicit end markers.",
     "The legacy artifact demonstrates partial procedural enactment on a shared laboratory environment, not independent push-button replay of fully isolated campaigns."
   ],
   "runtime_reproducibility": {

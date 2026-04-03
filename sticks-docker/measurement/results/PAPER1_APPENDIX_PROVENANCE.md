@@ -24,11 +24,11 @@
 
 ## Docker Audit Breakdown
 
-- `APT41 DUST`: successful links `24`, end marker `True`, residual non-zero `0`
-- `C0010`: successful links `10`, end marker `True`, residual non-zero `0`
+- `APT41 DUST`: successful links `9`, end marker `False`, residual non-zero `1`
+- `C0010`: successful links `9`, end marker `True`, residual non-zero `1`
 - `C0026`: successful links `7`, end marker `True`, residual non-zero `0`
-- `CostaRicto`: successful links `11`, end marker `True`, residual non-zero `0`
-- `Operation MidnightEclipse`: successful links `18`, end marker `True`, residual non-zero `0`
+- `CostaRicto`: successful links `9`, end marker `False`, residual non-zero `1`
+- `Operation MidnightEclipse`: successful links `9`, end marker `False`, residual non-zero `1`
 - `Outer Space`: successful links `9`, end marker `True`, residual non-zero `0`
-- `Salesforce Data Exfiltration`: successful links `19`, end marker `True`, residual non-zero `0`
-- `ShadowRay`: successful links `11`, end marker `True`, residual non-zero `0`
+- `Salesforce Data Exfiltration`: successful links `9`, end marker `False`, residual non-zero `1`
+- `ShadowRay`: successful links `9`, end marker `False`, residual non-zero `1`

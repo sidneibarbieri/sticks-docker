@@ -85,22 +85,22 @@
     {
       "operation": "OP001",
       "adversary": "APT41 DUST",
-      "successful_links": 24,
+      "successful_links": 9,
       "failed_links": 0,
-      "pending_links": 0,
-      "chain_count": 24,
-      "end_marker": true,
-      "residual_nonzero": 0
+      "pending_links": 1,
+      "chain_count": 10,
+      "end_marker": false,
+      "residual_nonzero": 1
     },
     {
       "operation": "OP002",
       "adversary": "C0010",
-      "successful_links": 10,
+      "successful_links": 9,
       "failed_links": 0,
-      "pending_links": 0,
+      "pending_links": 1,
       "chain_count": 10,
       "end_marker": true,
-      "residual_nonzero": 0
+      "residual_nonzero": 1
     },
     {
       "operation": "OP003",
@@ -115,22 +115,22 @@
     {
       "operation": "OP004",
       "adversary": "CostaRicto",
-      "successful_links": 11,
+      "successful_links": 9,
       "failed_links": 0,
-      "pending_links": 0,
-      "chain_count": 11,
-      "end_marker": true,
-      "residual_nonzero": 0
+      "pending_links": 1,
+      "chain_count": 10,
+      "end_marker": false,
+      "residual_nonzero": 1
     },
     {
       "operation": "OP005",
       "adversary": "Operation MidnightEclipse",
-      "successful_links": 18,
+      "successful_links": 9,
       "failed_links": 0,
-      "pending_links": 0,
-      "chain_count": 18,
-      "end_marker": true,
-      "residual_nonzero": 0
+      "pending_links": 1,
+      "chain_count": 10,
+      "end_marker": false,
+      "residual_nonzero": 1
     },
     {
       "operation": "OP006",
@@ -145,22 +145,22 @@
     {
       "operation": "OP007",
       "adversary": "Salesforce Data Exfiltration",
-      "successful_links": 19,
+      "successful_links": 9,
       "failed_links": 0,
-      "pending_links": 0,
-      "chain_count": 19,
-      "end_marker": true,
-      "residual_nonzero": 0
+      "pending_links": 1,
+      "chain_count": 10,
+      "end_marker": false,
+      "residual_nonzero": 1
     },
     {
       "operation": "OP008",
       "adversary": "ShadowRay",
-      "successful_links": 11,
+      "successful_links": 9,
       "failed_links": 0,
-      "pending_links": 0,
-      "chain_count": 11,
-      "end_marker": true,
-      "residual_nonzero": 0
+      "pending_links": 1,
+      "chain_count": 10,
+      "end_marker": false,
+      "residual_nonzero": 1
     }
   ]
 }

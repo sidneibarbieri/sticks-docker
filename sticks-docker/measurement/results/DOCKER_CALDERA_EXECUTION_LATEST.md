@@ -1,6 +1,6 @@
 # Docker Caldera Execution Audit
 
-- Generated at: `2026-03-26T06:47:20+00:00`
+- Generated at: `2026-04-03T15:59:09+00:00`
 - Caldera URL: `http://127.0.0.1:8888`
 - Curated abilities loaded: `8`
 - Curated adversaries loaded: `8`
@@ -8,7 +8,7 @@
 - Operations observed: `8`
 - Poll timeout reached: `False`
 - Quiescent plateau reached: `True`
-- Effective quiescent window (s): `120`
+- Effective quiescent window (s): `15`
 
 ## Operation States
 
@@ -16,23 +16,23 @@
 - State: `running`
 - Step count: `0`
 - Step status counts: `{}`
-- Chain count: `24`
-- Chain status counts: `{"0": 24}`
+- Chain count: `10`
+- Chain status counts: `{"-3": 1, "0": 9}`
 
-- Last link status: `0`
-- Last link technique: `T1529` END OF APT 41 DUST
-- Last link output: `True`
+- Last link status: `-3`
+- Last link technique: `T1119` T1119 - Automated Collection
+- Last link output: `False`
 
 ### OP002
 - State: `running`
 - Step count: `0`
 - Step status counts: `{}`
 - Chain count: `10`
-- Chain status counts: `{"0": 10}`
+- Chain status counts: `{"-3": 1, "0": 9}`
 
-- Last link status: `0`
+- Last link status: `-3`
 - Last link technique: `T1529` END OF C0010
-- Last link output: `True`
+- Last link output: `False`
 
 ### OP003
 - State: `running`
@@ -49,23 +49,23 @@
 - State: `running`
 - Step count: `0`
 - Step status counts: `{}`
-- Chain count: `11`
-- Chain status counts: `{"0": 11}`
+- Chain count: `10`
+- Chain status counts: `{"-3": 1, "0": 9}`
 
-- Last link status: `0`
-- Last link technique: `T1529` END OF COSTARICTO
-- Last link output: `True`
+- Last link status: `-3`
+- Last link technique: `T1572` T1572 - Protocol Tunneling
+- Last link output: `False`
 
 ### OP005
 - State: `running`
 - Step count: `0`
 - Step status counts: `{}`
-- Chain count: `18`
-- Chain status counts: `{"0": 18}`
+- Chain count: `10`
+- Chain status counts: `{"-3": 1, "0": 9}`
 
-- Last link status: `0`
-- Last link technique: `T1529` END OF OPERATION MIDNIGHT ECLIPSE
-- Last link output: `True`
+- Last link status: `-3`
+- Last link technique: `T1584.003` T1584.003 - Virtual Private Server
+- Last link output: `False`
 
 ### OP006
 - State: `running`
@@ -82,20 +82,20 @@
 - State: `running`
 - Step count: `0`
 - Step status counts: `{}`
-- Chain count: `19`
-- Chain status counts: `{"0": 19}`
+- Chain count: `10`
+- Chain status counts: `{"-3": 1, "0": 9}`
 
-- Last link status: `0`
-- Last link technique: `T1529` END OF SALESFORCE DATA EXFILTRATION
-- Last link output: `True`
+- Last link status: `-3`
+- Last link technique: `T1083` T1083 - File and Directory Discovery
+- Last link output: `False`
 
 ### OP008
 - State: `running`
 - Step count: `0`
 - Step status counts: `{}`
-- Chain count: `11`
-- Chain status counts: `{"0": 11}`
+- Chain count: `10`
+- Chain status counts: `{"-3": 1, "0": 9}`
 
-- Last link status: `0`
-- Last link technique: `T1529` END OF SHADOWRAY
-- Last link output: `True`
+- Last link status: `-3`
+- Last link technique: `T1496.001` T1496.001 - Compute Hijacking
+- Last link output: `False`
