@@ -34,6 +34,15 @@ OUTPUT_JSON = MEASUREMENT_ROOT / "results" / "paper1_robustness_provenance.json"
 OUTPUT_MD = MEASUREMENT_ROOT / "results" / "PAPER1_ROBUSTNESS_PROVENANCE.md"
 
 
+def display_path(path: Path) -> str:
+    for root in (WORKSPACE_ROOT, MEASUREMENT_ROOT):
+        try:
+            return path.relative_to(root).as_posix()
+        except ValueError:
+            pass
+    return path.as_posix()
+
+
 def load_analyze_campaigns_module():
     spec = importlib.util.spec_from_file_location("analyze_campaigns", ANALYZE_CAMPAIGNS)
     if spec is None or spec.loader is None:
@@ -297,7 +306,7 @@ def main():
 
     report = {
         "generated_at_utc": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
-        "bundle_path": str(mod.DEFAULT_BUNDLE),
+        "bundle_path": display_path(mod.DEFAULT_BUNDLE),
         "campaign_matrix_shape": list(matrix.shape),
         "campaign_matrix_density": round(float(matrix.mean()), 6),
         "agglomerative_binary_metrics": compute_agglomerative_silhouettes(matrix),

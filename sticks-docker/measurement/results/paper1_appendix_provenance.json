@@ -1,7 +1,7 @@
 {
-  "bundle": "/Users/sidneibarbieri/paper measurement/sticks/data/stix/enterprise-attack.json",
-  "docker_execution": "/Users/sidneibarbieri/paper measurement/sticks-docker/measurement/results/docker_caldera_execution_latest.json",
-  "docker_findings": "/Users/sidneibarbieri/paper measurement/sticks-docker/measurement/results/docker_execution_findings_latest.json",
+  "bundle": "sticks/data/stix/enterprise-attack.json",
+  "docker_execution": "sticks-docker/measurement/results/docker_caldera_execution_latest.json",
+  "docker_findings": "sticks-docker/measurement/results/docker_execution_findings_latest.json",
   "active_attack_patterns": 691,
   "field_population": {
     "kill_chain_phases": {

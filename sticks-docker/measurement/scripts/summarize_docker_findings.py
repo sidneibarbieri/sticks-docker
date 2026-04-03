@@ -24,6 +24,20 @@ LATEST_JSON = RESULTS_DIR / "docker_execution_findings_latest.json"
 LATEST_MD = RESULTS_DIR / "DOCKER_EXECUTION_FINDINGS_LATEST.md"
 
 
+def display_path(path: Path) -> str:
+    path = path.resolve()
+    for root in (STICKS_DOCKER_ROOT.parent, MEASUREMENT_ROOT):
+        try:
+            return path.relative_to(root).as_posix()
+        except ValueError:
+            pass
+    for marker in ("docker-context", "curated-api", "sticks-docker", "results"):
+        if marker in path.parts:
+            index = path.parts.index(marker)
+            return Path(*path.parts[index:]).as_posix()
+    return path.name or path.as_posix()
+
+
 def utc_now_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
@@ -164,11 +178,11 @@ def build_findings_payload() -> dict[str, Any]:
     return {
         "generated_at_utc": utc_now_iso(),
         "sources": {
-            "execution_report": str(EXECUTION_LATEST_JSON),
-            "runtime_report": str(RUNTIME_LATEST_JSON),
+            "execution_report": display_path(EXECUTION_LATEST_JSON),
+            "runtime_report": display_path(RUNTIME_LATEST_JSON),
         },
         "architecture": {
-            "docker_compose": str(DOCKER_ROOT / "docker-compose.yml"),
+            "docker_compose": display_path(DOCKER_ROOT / "docker-compose.yml"),
             "networks": parse_docker_networks(DOCKER_ROOT / "docker-compose.yml"),
             "nginx_bootstrap_scripts": nginx_scripts,
             "db_bootstrap_scripts": db_scripts,

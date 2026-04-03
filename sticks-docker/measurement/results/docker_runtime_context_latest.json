@@ -11,14 +11,14 @@
     ".docker/caldera/Dockerfile",
     ".docker/kali/Dockerfile"
   ],
-  "generated_at_utc": "2026-04-02T18:59:13+00:00",
+  "generated_at_utc": "2026-04-03T00:05:11+00:00",
   "generated_conf_files": [
     ".docker/caldera/conf/agents.yml",
     ".docker/caldera/conf/payloads.yml"
   ],
   "host_architecture": "arm64",
-  "prepared_curated_api_root": "/var/folders/cn/xg_f36d16gj8jkyyyjbnlypr0000gn/T/paper1-release-check.tx1Ta4/curated-api",
-  "prepared_runtime_root": "/var/folders/cn/xg_f36d16gj8jkyyyjbnlypr0000gn/T/paper1-release-check.tx1Ta4/docker-context",
+  "prepared_curated_api_root": "curated-api",
+  "prepared_runtime_root": "docker-context",
   "repaired_scripts": [
     ".docker/caldera/plugins/access/data/payloads/scanner.sh",
     ".docker/caldera/plugins/builder/install.sh",
@@ -54,5 +54,5 @@
     "kali-data",
     ".docker/db/dbdata"
   ],
-  "source_docker_root": "/Users/sidneibarbieri/paper measurement/sticks-docker/docker"
+  "source_docker_root": "sticks-docker/docker"
 }

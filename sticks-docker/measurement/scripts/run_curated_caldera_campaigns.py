@@ -60,6 +60,20 @@ SUBSTRATE_PORT_REQUIREMENTS = {
 }
 
 
+def display_path(path: Path) -> str:
+    path = path.resolve()
+    for root in (WORKSPACE_ROOT, MEASUREMENT_ROOT):
+        try:
+            return path.relative_to(root).as_posix()
+        except ValueError:
+            pass
+    for marker in ("curated-api", "docker-context", "sticks-docker", "results"):
+        if marker in path.parts:
+            index = path.parts.index(marker)
+            return Path(*path.parts[index:]).as_posix()
+    return path.name or path.as_posix()
+
+
 @dataclass(frozen=True)
 class CuratedArtifact:
     path: Path
@@ -385,7 +399,7 @@ def load_curated_artifacts(
             execution_log.append(
                 {
                     "kind": artifact.kind,
-                    "path": str(artifact.path),
+                    "path": display_path(artifact.path),
                     "endpoint": endpoint,
                     "object_id": str(
                         payload.get("adversary_id")
@@ -485,7 +499,9 @@ def extract_loaded_adversaries(
     for artifact in artifacts:
         if artifact.kind != "adversary":
             continue
-        entry = load_log_by_path[str(artifact.path)]
+        entry = load_log_by_path.get(display_path(artifact.path))
+        if entry is None:
+            entry = load_log_by_path[str(artifact.path)]
         payload = json.loads(entry["stdout"])
         loaded_adversaries.append(
             {
@@ -856,7 +872,7 @@ def main() -> None:
         "generated_at_utc": utc_now_iso(),
         "caldera_url": arguments.caldera_url,
         "group": arguments.group,
-        "curated_api_dir": str(curated_api_dir),
+        "curated_api_dir": display_path(curated_api_dir),
         "requested_adversary_names": arguments.adversary_name,
         "poll_timeout_reached": poll_timeout_reached,
         "quiescent_plateau_reached": quiescent_plateau_reached,
@@ -869,7 +885,7 @@ def main() -> None:
         },
         "agents": agents,
         "artifacts": [
-            {"kind": artifact.kind, "path": str(artifact.path), "name": artifact.name}
+            {"kind": artifact.kind, "path": display_path(artifact.path), "name": artifact.name}
             for artifact in artifacts
         ],
         "empty_caldera": None

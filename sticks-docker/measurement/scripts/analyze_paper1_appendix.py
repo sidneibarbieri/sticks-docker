@@ -17,6 +17,15 @@ PROVENANCE_JSON = MEASUREMENT_ROOT / "results" / "paper1_appendix_provenance.jso
 TEX_VALUES = WORKSPACE_ROOT / "ACM CCS - Paper 1" / "appendix_values.tex"
 
 
+def display_path(path: Path) -> str:
+    for root in (WORKSPACE_ROOT, MEASUREMENT_ROOT):
+        try:
+            return path.relative_to(root).as_posix()
+        except ValueError:
+            pass
+    return path.as_posix()
+
+
 def load_json(path: Path) -> dict:
     with path.open() as f:
         return json.load(f)
@@ -200,9 +209,9 @@ def write_tex(field_stats: dict, itemsets: list[dict], docker_rows: list[dict], 
 
 def write_provenance(field_stats: dict, itemsets: list[dict], docker_rows: list[dict], total_attack_patterns: int) -> None:
     payload = {
-        "bundle": str(ENTERPRISE_BUNDLE),
-        "docker_execution": str(DOCKER_EXECUTION),
-        "docker_findings": str(DOCKER_FINDINGS),
+        "bundle": display_path(ENTERPRISE_BUNDLE),
+        "docker_execution": display_path(DOCKER_EXECUTION),
+        "docker_findings": display_path(DOCKER_FINDINGS),
         "active_attack_patterns": total_attack_patterns,
         "field_population": field_stats,
         "itemset_support": itemsets,
@@ -213,9 +222,9 @@ def write_provenance(field_stats: dict, itemsets: list[dict], docker_rows: list[
     lines = [
         "# Paper 1 Appendix Provenance",
         "",
-        f"- Bundle: `{ENTERPRISE_BUNDLE}`",
-        f"- Docker execution report: `{DOCKER_EXECUTION}`",
-        f"- Docker findings report: `{DOCKER_FINDINGS}`",
+        f"- Bundle: `{display_path(ENTERPRISE_BUNDLE)}`",
+        f"- Docker execution report: `{display_path(DOCKER_EXECUTION)}`",
+        f"- Docker findings report: `{display_path(DOCKER_FINDINGS)}`",
         f"- Active Enterprise attack-patterns: `{total_attack_patterns}`",
         "",
         "## Automation-Relevant Field Population",

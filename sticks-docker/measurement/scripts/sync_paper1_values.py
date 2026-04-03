@@ -29,6 +29,15 @@ OUTPUT_JSON = MEASUREMENT_ROOT / "results" / "paper1_manuscript_values_sync.json
 OUTPUT_MD = MEASUREMENT_ROOT / "results" / "PAPER1_MANUSCRIPT_VALUES_SYNC.md"
 
 
+def display_path(path: Path) -> str:
+    for root in (WORKSPACE_ROOT, MEASUREMENT_ROOT):
+        try:
+            return path.relative_to(root).as_posix()
+        except ValueError:
+            pass
+    return path.as_posix()
+
+
 @dataclass
 class SyncResult:
     status: str
@@ -103,7 +112,7 @@ def write_report(result: SyncResult) -> None:
     payload = {
         "generated_at": datetime.now().isoformat(),
         "result": result.__dict__,
-        "manuscript_values_path": str(PAPER1_VALUES),
+        "manuscript_values_path": display_path(PAPER1_VALUES),
     }
     OUTPUT_JSON.write_text(json.dumps(payload, indent=2), encoding="utf-8")
 
@@ -114,7 +123,7 @@ def write_report(result: SyncResult) -> None:
         f"- Status: `{result.status}`",
         f"- Macros written: `{result.macros_written}`",
         f"- Details: {result.details}",
-        f"- Manuscript values path: `{PAPER1_VALUES}`",
+        f"- Manuscript values path: `{display_path(PAPER1_VALUES)}`",
         "",
     ]
     OUTPUT_MD.write_text("\n".join(lines), encoding="utf-8")

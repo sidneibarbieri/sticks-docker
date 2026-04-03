@@ -108,7 +108,11 @@ def main() -> None:
         },
         "agents": agents,
         "artifacts": [
-            {"kind": artifact.kind, "path": str(artifact.path), "name": artifact.name}
+            {
+                "kind": artifact.kind,
+                "path": runner.display_path(artifact.path),
+                "name": artifact.name,
+            }
             for artifact in artifacts
         ],
         "empty_caldera": {"stdout": "captured after clean rerun", "stderr": ""},

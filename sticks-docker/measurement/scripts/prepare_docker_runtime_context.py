@@ -89,6 +89,20 @@ SALESFORCE_UPLOAD_COMMAND = (
 SHADOWRAY_TOOL_ABILITY_ID = "5c0eccee-eee4-5d88-b6e5-shadowray"
 
 
+def display_path(path: Path) -> str:
+    path = path.resolve()
+    for root in (WORKSPACE_ROOT, MEASUREMENT_ROOT):
+        try:
+            return path.relative_to(root).as_posix()
+        except ValueError:
+            pass
+    for marker in ("docker-context", "curated-api", "sticks-docker", "sticks", "results"):
+        if marker in path.parts:
+            index = path.parts.index(marker)
+            return Path(*path.parts[index:]).as_posix()
+    return path.name or path.as_posix()
+
+
 @dataclass(frozen=True)
 class PreparedContext:
     output_dir: Path
@@ -435,9 +449,9 @@ def main() -> None:
     payload = {
         "generated_at_utc": utc_now_iso(),
         "host_architecture": normalize_host_architecture(),
-        "source_docker_root": str(SOURCE_DOCKER_ROOT),
-        "prepared_runtime_root": str(prepared.output_dir),
-        "prepared_curated_api_root": str(prepared.prepared_api_root),
+        "source_docker_root": display_path(SOURCE_DOCKER_ROOT),
+        "prepared_runtime_root": display_path(prepared.output_dir),
+        "prepared_curated_api_root": display_path(prepared.prepared_api_root),
         "reset_directories": [str(path) for path in prepared.reset_directories],
         "repaired_scripts": [str(path) for path in prepared.repaired_scripts],
         "generated_conf_files": [str(path) for path in prepared.generated_conf_files],

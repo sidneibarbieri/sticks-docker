@@ -32,6 +32,15 @@ OUTPUT_JSON = MEASUREMENT_ROOT / "results" / "paper1_identifiability_provenance.
 OUTPUT_MD = MEASUREMENT_ROOT / "results" / "PAPER1_IDENTIFIABILITY_PROVENANCE.md"
 
 
+def display_path(path: Path) -> str:
+    for root in (WORKSPACE_ROOT, MEASUREMENT_ROOT):
+        try:
+            return path.relative_to(root).as_posix()
+        except ValueError:
+            pass
+    return path.as_posix()
+
+
 def is_active(obj: dict[str, Any]) -> bool:
     return not obj.get("revoked", False) and not obj.get("x_mitre_deprecated", False)
 
@@ -343,7 +352,7 @@ def compute_identifiability_report(bundle_path: Path) -> dict[str, Any]:
 
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(),
-        "bundle_path": str(bundle_path),
+        "bundle_path": display_path(bundle_path),
         "methodology": {
             "task": (
                 "Positive-evidence identifiability over ATT&CK technique profiles."

@@ -1,8 +1,8 @@
 # Paper 1 Appendix Provenance
 
-- Bundle: `/Users/sidneibarbieri/paper measurement/sticks/data/stix/enterprise-attack.json`
-- Docker execution report: `/Users/sidneibarbieri/paper measurement/sticks-docker/measurement/results/docker_caldera_execution_latest.json`
-- Docker findings report: `/Users/sidneibarbieri/paper measurement/sticks-docker/measurement/results/docker_execution_findings_latest.json`
+- Bundle: `sticks/data/stix/enterprise-attack.json`
+- Docker execution report: `sticks-docker/measurement/results/docker_caldera_execution_latest.json`
+- Docker findings report: `sticks-docker/measurement/results/docker_execution_findings_latest.json`
 - Active Enterprise attack-patterns: `691`
 
 ## Automation-Relevant Field Population

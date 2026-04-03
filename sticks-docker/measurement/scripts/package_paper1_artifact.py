@@ -32,6 +32,14 @@ def copy_file(src: Path, dest: Path) -> None:
     shutil.copy2(src, dest)
 
 
+def copy_text_with_repo_relativization(src: Path, dest: Path) -> None:
+    ensure_parent(dest)
+    text = src.read_text(encoding="utf-8")
+    repo_prefix = str(REPO_ROOT) + "/"
+    text = text.replace(repo_prefix, "")
+    dest.write_text(text, encoding="utf-8")
+
+
 def copy_tree(src: Path, dest: Path) -> None:
     if dest.exists():
         shutil.rmtree(dest)
@@ -123,12 +131,12 @@ def stage_measurement_boundary(dest_root: Path) -> None:
         "DOCKER_CALDERA_EXECUTION_LATEST.md",
         "docker_execution_findings_latest.json",
         "DOCKER_EXECUTION_FINDINGS_LATEST.md",
-        "PAPER1_CAMERA_READY_AUDIT_20260325.md",
-        "PAPER1_MITRE_DRIFT_CHECK_20260325.md",
-        "PAPER1_SCIENTIFIC_AUDIT_20260322.md",
     ]
     for relative in result_files:
-        copy_file(MEASUREMENT_ROOT / "results" / relative, measurement_dest / "results" / relative)
+        copy_text_with_repo_relativization(
+            MEASUREMENT_ROOT / "results" / relative,
+            measurement_dest / "results" / relative,
+        )
 
 
 def stage_frozen_artifact(dest_root: Path) -> None:

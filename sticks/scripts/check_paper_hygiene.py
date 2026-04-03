@@ -7,12 +7,31 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
 
-WORKSPACE_ROOT = Path(__file__).resolve().parents[2]
+SCRIPT_ROOT = Path(__file__).resolve().parent.parent
+
+
+def discover_workspace_root() -> Path:
+    explicit = os.environ.get("WORKSPACE_ROOT")
+    if explicit:
+        return Path(explicit)
+
+    candidates = [
+        SCRIPT_ROOT,
+        SCRIPT_ROOT.parent,
+    ]
+    for candidate in candidates:
+        if (candidate / "ACM CCS - Paper 1").exists() or (candidate / "ACM CCS - Paper 2").exists():
+            return candidate
+    return SCRIPT_ROOT
+
+
+WORKSPACE_ROOT = discover_workspace_root()
 PAPER_DIRS = {
     "paper1": WORKSPACE_ROOT / "ACM CCS - Paper 1",
     "paper2": WORKSPACE_ROOT / "ACM CCS - Paper 2",

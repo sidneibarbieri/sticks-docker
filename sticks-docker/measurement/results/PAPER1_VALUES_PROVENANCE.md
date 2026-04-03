@@ -1,6 +1,6 @@
 # Paper 1 Values Provenance
 
-- Generated at: `2026-04-02T15:02:40.728268`
+- Generated at: `2026-04-02T20:04:54.899108`
 - Bundle: `sticks/data/stix/enterprise-attack.json`
 
 ## Counts
