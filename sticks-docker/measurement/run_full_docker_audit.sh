@@ -29,7 +29,9 @@ python3 sticks-docker/measurement/scripts/prepare_docker_runtime_context.py \
 )
 
 python3 sticks-docker/measurement/scripts/run_curated_caldera_campaigns.py \
-  --curated-api-dir "${API_OVERLAY}"
+  --curated-api-dir "${API_OVERLAY}" \
+  --agent-timeout 900 \
+  --substrate-timeout 1800
 python3 sticks-docker/measurement/scripts/summarize_docker_findings.py
 
 echo "PASS: full Paper 1 Docker audit reran successfully"
