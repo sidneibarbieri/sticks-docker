@@ -55,6 +55,13 @@ def copy_tree(src: Path, dest: Path) -> None:
     )
 
 
+def remove_if_exists(path: Path) -> None:
+    if path.is_dir():
+        shutil.rmtree(path)
+    elif path.exists():
+        path.unlink()
+
+
 def write_text(path: Path, text: str) -> None:
     ensure_parent(path)
     path.write_text(text, encoding="utf-8")
@@ -141,13 +148,33 @@ def stage_measurement_boundary(dest_root: Path) -> None:
 
 def stage_frozen_artifact(dest_root: Path) -> None:
     sticks_dest = dest_root / "sticks-docker" / "sticks"
-    copy_tree(STICKS_DOCKER_ROOT / "sticks" / "config", sticks_dest / "config")
     copy_tree(STICKS_DOCKER_ROOT / "sticks" / "lib", sticks_dest / "lib")
     copy_tree(STICKS_DOCKER_ROOT / "sticks" / "tools", sticks_dest / "tools")
     copy_tree(STICKS_DOCKER_ROOT / "sticks" / "data" / "api", sticks_dest / "data" / "api")
-    copy_tree(STICKS_DOCKER_ROOT / "sticks" / "data" / "dag", sticks_dest / "data" / "dag")
-    for relative in ["main.py", "requirements.txt"]:
-        copy_file(STICKS_DOCKER_ROOT / "sticks" / relative, sticks_dest / relative)
+    write_text(
+        sticks_dest / "config" / "config.py",
+        "\n".join(
+            [
+                "from pathlib import Path",
+                "",
+                '# Minimal frozen configuration required by the Paper 1 public artifact.',
+                "STIX_URL = \"https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/enterprise-attack/enterprise-attack.json\"",
+                "DATA_DIR = Path(\"data\")",
+                "ATOMIC_RED_DIR = DATA_DIR / \"atomic-red\"",
+                "STIX_DIR = DATA_DIR / \"stix\"",
+                "APT_DIR = DATA_DIR / \"stix_adversaries\"",
+                "CALDERA_ABILITIES_DIR = DATA_DIR / \"caldera_abilities\"",
+                "CALDERA_ADVERSARIES_DIR = DATA_DIR / \"caldera_adversaries\"",
+                "CALDERA_API_FILES = DATA_DIR / \"api\"",
+                "CALDERA_DAG_FILES = DATA_DIR / \"dag\"",
+                "STIX_FILE = STIX_DIR / \"stix_full.json\"",
+                "CALDERA_URL = \"http://localhost:8888\"",
+                "CALDERA_API_KEY_RED = \"ADMIN123\"",
+                "AGENT_PATH = DATA_DIR / \"agents\"",
+                "",
+            ]
+        ),
+    )
 
     docker_dest = dest_root / "sticks-docker" / "docker"
     copy_file(STICKS_DOCKER_ROOT / "docker" / "docker-compose.yml", docker_dest / "docker-compose.yml")
@@ -159,6 +186,11 @@ def stage_frozen_artifact(dest_root: Path) -> None:
 
     empty_directory(docker_dest / ".docker" / "db" / "dbdata")
     empty_directory(docker_dest / "kali-data")
+    remove_if_exists(docker_dest / ".docker" / "nginx" / "var" / "www" / "html" / "tmp")
+    write_text(
+        docker_dest / ".docker" / "nginx" / "var" / "www" / "html" / "tmp" / ".gitkeep",
+        "",
+    )
 
     write_text(
         sticks_dest / "README.md",
@@ -351,7 +383,7 @@ def write_artifact_docs(dest_root: Path) -> None:
                 "- `sticks/data/stix/enterprise-attack.json`: the Enterprise ATT&CK bundle used by the Paper 1 measurement scripts.",
                 "- `sticks/scripts/`: manuscript build and hygiene helpers required by the verifier.",
                 "- `sticks-docker/measurement/`: Paper 1 measurement scripts, tests, latest audit outputs, runtime docs, and the canonical verifier.",
-                "- `sticks-docker/sticks/`: frozen support code plus curated Caldera API payloads and DAG files.",
+                "- `sticks-docker/sticks/`: frozen support code plus curated Caldera API payloads.",
                 "- `sticks-docker/docker/`: frozen shared-substrate Docker context with runtime residue removed.",
                 "",
                 "## Excluded components",

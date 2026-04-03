@@ -202,14 +202,14 @@
     51,
     297
   ],
-  "generated_at_utc": "2026-04-03T00:04:55Z",
+  "generated_at_utc": "2026-04-03T00:31:57Z",
   "lcs_randomized_tactic_sensitivity": {
-    "max_avg": 25.8,
-    "max_max": 29,
+    "max_avg": 25.985,
+    "max_max": 28,
     "max_min": 24,
     "mean_avg": 2.739,
-    "mean_max": 2.759,
-    "mean_min": 2.729,
+    "mean_max": 2.765,
+    "mean_min": 2.726,
     "median_avg": 2.0,
     "median_max": 2.0,
     "median_min": 2.0

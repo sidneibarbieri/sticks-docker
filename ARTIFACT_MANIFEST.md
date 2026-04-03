@@ -11,7 +11,7 @@ Public repository URL: `https://github.com/sidneibarbieri/sticks-docker`.
 - `sticks/data/stix/enterprise-attack.json`: the Enterprise ATT&CK bundle used by the Paper 1 measurement scripts.
 - `sticks/scripts/`: manuscript build and hygiene helpers required by the verifier.
 - `sticks-docker/measurement/`: Paper 1 measurement scripts, tests, latest audit outputs, runtime docs, and the canonical verifier.
-- `sticks-docker/sticks/`: frozen support code plus curated Caldera API payloads and DAG files.
+- `sticks-docker/sticks/`: frozen support code plus curated Caldera API payloads.
 - `sticks-docker/docker/`: frozen shared-substrate Docker context with runtime residue removed.
 
 ## Excluded components
